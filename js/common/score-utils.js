@@ -1,5 +1,5 @@
-const points = (userAnswers) => {
-console.log('points')
+const points = () => {
+
 };
 
 export {points};
