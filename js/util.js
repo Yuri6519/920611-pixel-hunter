@@ -1,5 +1,4 @@
 // утилиты
-import greetingScreen from './greeting';
 
 const mainElement = document.querySelector(`#main`);
 
@@ -22,7 +21,7 @@ export const showScreeen = (element) => {
 };
 
 // ф-ия возврата на экран приветствия
-export const returnToGreetngScreen = (element) => {
+export const returnToGreetngScreen = (element, greetingScreen) => {
   element.addEventListener(`click`, () => {
     showScreeen(greetingScreen());
   });

@@ -2,6 +2,7 @@
 
 import {createElementFromTemplate, showScreeen, returnToGreetngScreen} from './util';
 import gameScreenThird from './game-3';
+import greetingScreen from './greeting';
 
 export default () => {
 
@@ -63,7 +64,7 @@ export default () => {
     });
   });
 
-  returnToGreetngScreen(element.querySelector(`.back`));
+  returnToGreetngScreen(element.querySelector(`.back`), greetingScreen);
 
   return element;
 

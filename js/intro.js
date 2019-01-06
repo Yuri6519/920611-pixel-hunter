@@ -1,6 +1,8 @@
 // Модуль "Интро"
 
 import {createElementFromTemplate, returnToGreetngScreen} from './util';
+import greetingScreen from './greeting';
+
 
 export default () => {
 
@@ -13,7 +15,7 @@ export default () => {
 
   const element = createElementFromTemplate(content);
 
-  returnToGreetngScreen(element.querySelector(`.intro__asterisk`));
+  returnToGreetngScreen(element.querySelector(`.intro__asterisk`), greetingScreen);
 
   return element;
 

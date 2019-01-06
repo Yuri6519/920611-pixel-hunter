@@ -1,6 +1,7 @@
 // Модуль "stats"
 
 import {createElementFromTemplate, returnToGreetngScreen} from './util';
+import greetingScreen from './greeting';
 
 export default () => {
 
@@ -120,7 +121,7 @@ export default () => {
 
   const element = createElementFromTemplate(content);
 
-  returnToGreetngScreen(element.querySelector(`.back`));
+  returnToGreetngScreen(element.querySelector(`.back`), greetingScreen);
 
   return element;
 

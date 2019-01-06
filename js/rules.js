@@ -2,6 +2,7 @@
 
 import {createElementFromTemplate, showScreeen, returnToGreetngScreen} from './util';
 import gameScreenFirst from './game-1';
+import greetingScreen from './greeting';
 
 export default () => {
 
@@ -49,7 +50,7 @@ export default () => {
     rulesButton.disabled = !evt.target.value.trim().length;
   });
 
-  returnToGreetngScreen(element.querySelector(`.back`));
+  returnToGreetngScreen(element.querySelector(`.back`), greetingScreen);
 
   return element;
 
