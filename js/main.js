@@ -1,6 +1,5 @@
 // главный модуль
 
-import introScreen from './intro';
-import {showScreeen} from './util';
+import initScreens from './screens/index';
 
-showScreeen(introScreen());
+initScreens();
