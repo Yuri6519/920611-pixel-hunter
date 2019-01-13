@@ -1,6 +1,5 @@
-const _MAX_LIFES_COUNT = 3;
-const _MAX_QUESTIONS = 10;
-const _LIFE_SCORE = 50;
+import {TIME_FAST, TIME_SLOW, MAX_LIFES_COUNT, MAX_QUESTIONS, LIFE_SCORE} from './constants';
+
 
 const points = (userScore) => {
   let res = 0;
@@ -9,7 +8,7 @@ const points = (userScore) => {
     throw new Error(`not enaugh actual params`);
   }
 
-  if (userScore.length !== _MAX_QUESTIONS) {
+  if (userScore.length !== MAX_QUESTIONS) {
     res = -1;
   } else {
 
@@ -27,22 +26,22 @@ const points = (userScore) => {
   // число допущенных ошибок
   const errCount = userScore.filter((itr) => (itr.res === 0)).length;
 
-  if (errCount > 3) {
+  if (errCount > MAX_LIFES_COUNT) {
     return -1;
   }
 
   // очки за правильные ответы
-  res = (_MAX_QUESTIONS - errCount) * 100;
+  res = (MAX_QUESTIONS - errCount) * 100;
 
   // добавим очки за жизни
-  res += (_MAX_LIFES_COUNT - errCount) * _LIFE_SCORE;
+  res += (MAX_LIFES_COUNT - errCount) * LIFE_SCORE;
 
   // очки за время
   let resTime = 0;
   userScore.forEach((itr) => {
     if (itr.time !== undefined && itr.time !== null) {
-      resTime += itr.time < 10 ? 50 : 0;
-      resTime += itr.time > 20 ? -50 : 0;
+      resTime += itr.time < TIME_FAST ? LIFE_SCORE : 0;
+      resTime += itr.time > TIME_SLOW ? -LIFE_SCORE : 0;
     }
   });
 

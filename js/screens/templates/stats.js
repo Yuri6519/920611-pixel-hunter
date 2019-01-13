@@ -1,7 +1,7 @@
 // Модуль "stats"
 
-import {createElementFromTemplate} from './util';
-import {initHeader} from './header/index';
+import {createElementFromTemplate} from '../util';
+import initHeader from '../header/index';
 
 
 export default () => {

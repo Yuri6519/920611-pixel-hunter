@@ -15,7 +15,7 @@ describe(`Score utils`, () => {
       assert.equal(points([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), -100);
       assert.notEqual(points([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]), -100);
     });
-    it(`every object should have defenit structure`, () => {
+    it(`every object should have definit structure`, () => {
       assert.equal(points([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]), -101);
     });
     it(`should have error number less than 4`, () => {

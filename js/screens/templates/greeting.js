@@ -1,7 +1,7 @@
 // Модуль "greeting"
 
-import {createElementFromTemplate, showScreeen} from './util';
-import {RULES} from '../common/constants';
+import {createElementFromTemplate, showScreeen} from '../util';
+import {RULES} from '../../common/constants';
 
 export default () => {
 

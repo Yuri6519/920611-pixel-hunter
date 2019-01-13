@@ -1,13 +1,16 @@
 // утилиты
-import introScreen from './intro';
-import greetingScreen from './greeting';
-import rulesScreen from './rules';
-import gameFirstScreen from './game-1';
-import gameSecondScreen from './game-2';
-import gameThirdScreen from './game-3';
-import statScreen from './stats';
 import {consts as c} from '../common/index';
-import {initShowScreen} from './util';
+import {initShowScreen} from '../screens/util';
+import {footerData} from '../data/mock-data';
+import {
+  introScreen,
+  greetingScreen,
+  rulesScreen,
+  gameFirstScreen,
+  gameSecondScreen,
+  gameThirdScreen,
+  statScreen,
+} from '../screens/templates/index';
 
 const mainElement = document.querySelector(`#main`);
 
@@ -33,7 +36,7 @@ const showNextScreeen = (key) => {
     mainElement.children[0].remove();
   }
 
-  mainElement.appendChild(SCREENS[key]());
+  mainElement.appendChild(SCREENS[key](footerData));
 
 };
 

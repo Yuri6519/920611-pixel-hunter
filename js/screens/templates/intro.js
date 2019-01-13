@@ -1,7 +1,7 @@
 // Модуль "Интро"
 
-import {createElementFromTemplate, showScreeen} from './util';
-import {GREETING} from '../common/constants';
+import {createElementFromTemplate, showScreeen} from '../util';
+import {GREETING} from '../../common/constants';
 
 const text = `Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.`;
 

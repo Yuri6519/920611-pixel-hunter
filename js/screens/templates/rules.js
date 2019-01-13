@@ -1,8 +1,8 @@
 // Модуль "rules"
 
-import {createElementFromTemplate, showScreeen} from './util';
-import {FIRST_GAME} from '../common/constants';
-import {initHeader} from './header/index';
+import {createElementFromTemplate, showScreeen} from '../util';
+import {FIRST_GAME} from '../../common/constants';
+import initHeader from '../header/index';
 
 
 export default () => {
