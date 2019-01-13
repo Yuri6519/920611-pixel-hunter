@@ -52,4 +52,4 @@ const points = (userScore) => {
 
 };
 
-export {points};
+export default points;

@@ -1,5 +1,10 @@
 // главный модуль
 
-import initScreens from './screens/index';
+// objects
+// import initScreens from './screens-obects/index';
+// initScreens();
 
-initScreens();
+
+import init from './screens/game-handler';
+
+init();

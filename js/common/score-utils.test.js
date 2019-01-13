@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {points} from './score-utils';
+import points from './score-utils';
 
 describe(`Score utils`, () => {
   describe(`calc scores`, () => {

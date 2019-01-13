@@ -1,4 +1,5 @@
-import {points as calcUserPoints} from './score-utils';
+import * as consts from './constants';
 
+export {default as calcUserPoints} from './score-utils';
+export {consts};
 
-export {calcUserPoints};
