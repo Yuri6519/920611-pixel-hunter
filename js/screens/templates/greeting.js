@@ -1,9 +1,8 @@
 // Модуль "greeting"
 
-import {createElementFromTemplate, showScreeen} from '../util';
-import {RULES} from '../../common/constants';
+import {createElementFromTemplate, processResponse} from '../util';
 
-export default () => {
+export default (_, index) => {
 
   const content = `
   <section class="greeting central--blur">
@@ -31,7 +30,7 @@ export default () => {
   const element = createElementFromTemplate(content);
 
   element.querySelector(`.greeting__continue`).addEventListener(`click`, () => {
-    showScreeen(RULES);
+    processResponse(index);
   });
 
   return element;

@@ -14,4 +14,9 @@ export const MAX_LIFES_COUNT = 3;
 export const MAX_QUESTIONS = 10;
 export const LIFE_SCORE = 50;
 export const CORRECT_ANSWER = 1;
+export const ERROR_LIFES_OVER = -999;
+
+// responses
+export const RESP_OK = 1;
+export const RESP_FAIL = 0;
 

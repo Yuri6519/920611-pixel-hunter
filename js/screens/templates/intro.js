@@ -1,11 +1,10 @@
 // Модуль "Интро"
 
-import {createElementFromTemplate, showScreeen} from '../util';
-import {GREETING} from '../../common/constants';
+import {createElementFromTemplate, processResponse} from '../util';
 
 const text = `Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.`;
 
-export default () => {
+export default (_, index) => {
 
   const content = `
   <section class="intro">
@@ -17,7 +16,7 @@ export default () => {
   const element = createElementFromTemplate(content);
 
   element.querySelector(`.intro__asterisk`).addEventListener(`click`, () => {
-    showScreeen(GREETING);
+    processResponse(index);
   });
 
 

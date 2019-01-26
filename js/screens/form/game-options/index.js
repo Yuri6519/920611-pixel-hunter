@@ -34,12 +34,47 @@ const mapTypeToOptiondata = {
     ]
   },
 
-  [SECOND_GAME]: {},
+  [SECOND_GAME]: {
+    count: 1,
+    image: {
+      placeholder: `http://placehold.it/705x455`,
+      src: undefined,
+      alt: IMAGE_ALT,
+      width: 705,
+      height: 455,
+    },
+    label: [
+      {
+        type: LABEL_TYPE_PHOTO,
+        name: LABEL_NAME,
+        span: LABEL_SPAN_PHOTO,
+      },
+      {
+        type: LABEL_TYPE_PAINT,
+        name: LABEL_NAME,
+        span: LABEL_SPAN_PAINT,
+      }
+    ]
+  },
 
-  [THIRD_GAME]: {},
+  [THIRD_GAME]: {
+    count: 3,
+    image: {
+      placeholder: `http://placehold.it/304x455`,
+      src: undefined,
+      alt: IMAGE_ALT,
+      width: 304,
+      height: 455,
+    },
+
+  },
 };
 
 const render = (obj, data) => {
+  if (!obj) {
+    throw new Error(`game-options::render::не найден объект в mapTypeToOptiondata по переданному ключу`);
+  }
+
   const {count, image, label} = obj;
   if (!count || count <= 0) {
     throw new Error(`GAME-OPTION::render::неверное значение параметр count: ${count}`);
@@ -62,7 +97,7 @@ const render = (obj, data) => {
 
     const img = renderImage(placeholder, src, alt, width, height);
 
-    let lbl;
+    let lbl = ``;
     if (label) {
       lbl = label.map((itr) => {
         let {type, name, span} = itr;

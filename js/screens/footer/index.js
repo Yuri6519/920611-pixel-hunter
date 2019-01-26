@@ -12,7 +12,7 @@ const CLASS_SLOW = `slow`;
 const CLASS_FAST = `fast`;
 const CLASS_CORRECT = `correct`;
 
-const setHeader = (answers) => {
+export const setFooter = (answers) => {
 
   if (!answers || answers.length !== MAX_QUESTIONS) {
     throw new Error(`SCREEN::FOOTER::Не верно определен массив ответов::${answers}`);
@@ -44,6 +44,5 @@ const setHeader = (answers) => {
 
 // инициализация
 export default (footer, answers) => {
-  footer.appendChild(setHeader(answers));
-
+  footer.appendChild(setFooter(answers));
 };

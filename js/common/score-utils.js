@@ -1,4 +1,11 @@
-import {TIME_FAST, TIME_SLOW, MAX_LIFES_COUNT, MAX_QUESTIONS, LIFE_SCORE} from './constants';
+import {
+  TIME_FAST,
+  TIME_SLOW,
+  MAX_LIFES_COUNT,
+  MAX_QUESTIONS,
+  LIFE_SCORE,
+  ERROR_LIFES_OVER
+} from './constants';
 
 
 const points = (userScore) => {
@@ -14,9 +21,9 @@ const points = (userScore) => {
 
     res = userScore.every((itr) => typeof itr === `object`) ? 0 : -100;
 
-    if (res >= 0) {
-      res = userScore.every((itr) => itr.res !== undefined && itr.time !== undefined) ? 0 : -101;
-    }
+    // if (res >= 0) {
+    //   res = userScore.every((itr) => itr.res !== undefined && itr.time !== undefined) ? 0 : -101;
+    // }
   }
 
   if (res < 0) {
@@ -27,7 +34,7 @@ const points = (userScore) => {
   const errCount = userScore.filter((itr) => (itr.res === 0)).length;
 
   if (errCount > MAX_LIFES_COUNT) {
-    return -1;
+    return ERROR_LIFES_OVER;
   }
 
   // очки за правильные ответы

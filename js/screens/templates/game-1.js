@@ -1,109 +1,90 @@
 // Модуль "game-1"
 
-import {createElementFromTemplate, showScreeen} from '../util';
-import {SECOND_GAME} from '../../common/constants';
-import initHeader from '../header/index';
-import initFooter from '../footer/index';
+import {createElementFromTemplate, processResponse} from '../util';
 import initForm from '../form/index';
+import {RESP_OK, RESP_FAIL} from '../../common/constants';
 
+const responses = {};
 
-const mockData = {
-  type: `game-1`,
-  images: [
-    {
-      src: `https://k42.kn3.net/D2F0370D6.jpg`,
-      type: `paint`
-    },
-    {
-      src: `https://i.imgur.com/DiHM5Zb.jpg`,
-      type: `photo`
-    },
-  ]
+const onInputClick = (evt, index) => {
+  // запоминаем выбор пользователя
+  responses[evt.target.name].checkValue = evt.target.value;
+
+  // проверка на все ответы
+  let res;
+  for (const key in responses) {
+    if (responses[key].checkValue) {
+
+      if (res === undefined || res === RESP_OK) {
+        // переопределяем
+        res = responses[key].checkValue === responses[key].type ? RESP_OK : RESP_FAIL;
+      }
+    } else {
+      res = undefined;
+      break;
+    }
+  }
+
+  if (res !== undefined) {
+    // получаем время
+    const time = 15; // mock data
+    const resp = {res, time};
+    processResponse(index, resp);
+  }
 };
 
+export default (type, index, data, header, footer) => {
 
-export default (answers) => {
   const content = `
-  <header class="header">
-  </header>
-  <section class="game">
-    <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
-    ${initForm(mockData)}
-  </section>
+  <div>
+    <section class="game">
+      <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
+      ${initForm(data, type)}
+    </section>
+  </div>
   `;
 
   const element = createElementFromTemplate(content);
 
+  const game = element.querySelector(`.game`);
+
   // заголовок
-  initHeader(element.querySelector(`.header`), false, answers);
+  element.querySelector(`div`).insertBefore(header, game);
 
   // footer
-  initFooter(element.querySelector(`.game`), answers);
+  game.appendChild(footer);
 
-  const arr = [];
+  Array.from(element.querySelectorAll(`.game__option`)).forEach((itr) => {
+    const srcImg = itr.querySelector(`img`).src;
 
-  Array.from(element.querySelectorAll(`.game__answer`)).forEach((itr) => {
-    const inp = itr.querySelector(`input`);
-
-    if (!arr.some((it) => it.name === inp.name)) {
-      arr.push({
-        name: inp.name,
-        check: false
-      });
+    const {images} = data;
+    let typeImg;
+    for (const obj of images) {
+      typeImg = !typeImg && obj.src === srcImg ? obj.type : typeImg;
     }
 
-    inp.addEventListener(`click`, (evt) => {
-      arr.forEach((el) => {
-        if (el.name === evt.target.name) {
-          el.check = true;
-        }
+    if (!typeImg) {
+      throw new Error(`Не найден image gпо src = ${srcImg}`);
+    }
+
+    Array.from(itr.querySelectorAll(`.game__answer`)).forEach((elm) => {
+
+      const inp = elm.querySelector(`input`);
+
+      responses[inp.name] = {
+        type: typeImg,
+        checkValue: undefined,
+      };
+
+      inp.addEventListener(`click`, (evt) => {
+        onInputClick(evt, index);
       });
 
-      if (arr.every((it) => it.check)) {
-        showScreeen(SECOND_GAME);
-      }
-
     });
+
   });
 
   return element;
 
 };
 
-
-/*
-    <form class="game__content">
-
-      <div class="game__option">
-
-        <img src="http://placehold.it/468x458" alt="Option 1" width="468" height="458">
-
-        <label class="game__answer game__answer--photo">
-          <input class="visually-hidden" name="question1" type="radio" value="photo">
-          <span>Фото</span>
-        </label>
-
-        <label class="game__answer game__answer--paint">
-          <input class="visually-hidden" name="question1" type="radio" value="paint">
-          <span>Рисунок</span>
-        </label>
-
-      </div>
-
-      <div class="game__option">
-        <img src="http://placehold.it/468x458" alt="Option 2" width="468" height="458">
-        <label class="game__answer game__answer--photo">
-          <input class="visually-hidden" name="question2" type="radio" value="photo">
-          <span>Фото</span>
-        </label>
-        <label class="game__answer game__answer--paint">
-          <input class="visually-hidden" name="question2" type="radio" value="paint">
-          <span>Рисунок</span>
-        </label>
-      </div>
-
-
-    </form>
-
-
-*/

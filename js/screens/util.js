@@ -1,5 +1,4 @@
 // утилиты
-import {GREETING} from '../common/constants';
 
 // ф-ия создает DOM element из строки
 export const createElementFromTemplate = (elementString) => {
@@ -8,16 +7,24 @@ export const createElementFromTemplate = (elementString) => {
   return div;
 };
 
-// ф-ия выводит экран
-export let showScreeen;
-export const initShowScreen = (fn) => {
-  showScreeen = fn;
+export let processResponse;
+export const initProcessResponse = (fn) => {
+  processResponse = fn;
+};
+
+let returnProc;
+export const initReturnProc = (index, fn) => {
+  returnProc = () => fn(index);
 };
 
 // ф-ия возврата на экран приветствия
 export const returnToGreetngScreen = (element) => {
   element.addEventListener(`click`, () => {
-    showScreeen(GREETING);
+    returnProc();
   });
 };
+
+
+//* **************************** DEPRICATED **********************************
+
 
