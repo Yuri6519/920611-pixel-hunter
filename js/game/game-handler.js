@@ -1,10 +1,16 @@
 // модуль процессор
 import {initProcessResponse, initReturnProc} from '../screens/util';
-import initGame, {SCREENS, initResp} from './game_initialiser';
+import initGame, {SCREENS, initResp, initHistory} from './game_initialiser';
 import initHeader from '../screens/header/index';
 import {setFooter as initFooter} from '../screens/footer/index';
-import {GREETING, ERROR_LIFES_OVER, STAT} from '../common/constants';
 import calcPoints from '../common/score-utils';
+import {
+  GREETING,
+  ERROR_LIFES_OVER,
+  STAT, RES_STATUS,
+  CURRENT_STAT,
+  STAT_NEXT,
+} from '../common/constants';
 
 
 const mainElement = document.querySelector(`#main`);
@@ -26,10 +32,6 @@ const init = () => {
 // process response
 const processResponse = (index, respData) => {
 
-  console.log(`processResponse::index`, index);
-  console.log(`processResponse::respData`, respData);
-  console.log(`processResponse::resp`, resp);
-
   // сразу увеличим индекс
   index = ++index;
 
@@ -50,14 +52,9 @@ const processResponse = (index, respData) => {
 
     resp[indEmpty] = respData;
 
-    console.log(`processResponse::indEmpty`, indEmpty);
-    console.log(`processResponse::resp`, resp);
-
     // проверка результата
     // расчет кол-ва ошибок
-    const pntState = calcPoints(resp);
-
-    console.log(`processResponse::pntState`, pntState);
+    const pntState = calcPoints(resp)[RES_STATUS];
 
     if (pntState < 0 && pntState !== ERROR_LIFES_OVER) {
       // внутренняя ошибка расчета баллов
@@ -69,20 +66,16 @@ const processResponse = (index, respData) => {
     // 2. Все ответы заполнены - игра пройдена
     const isCallStat = pntState === ERROR_LIFES_OVER || indEmpty === resp.length - 1;
 
-    console.log(`processResponse::pntState`, pntState);
-    console.log(`processResponse::indEmpty`, indEmpty);
-    console.log(`processResponse::resp.lengtgh`, resp.length);
-    console.log(`processResponse::isCallStat`, isCallStat);
-
     if (isCallStat) {
       // переход на экран ститстики]
       index = game.indexOf(game.filter((itr) => itr.type === STAT)[0]);
 
       // мутируем resp - добавляем прошлую статистику
-      const obj = {
-        CURRENT_STAT: resp,
-        LAST_STAT: []
-      };
+      const obj = {};
+      obj[CURRENT_STAT] = resp;
+      obj[`${STAT_NEXT}${1}`] = initHistory();
+      obj[`${STAT_NEXT}${2}`] = initHistory(1);
+      obj[`${STAT_NEXT}${3}`] = initHistory(2);
 
       resp = Object.assign({}, obj);
     }

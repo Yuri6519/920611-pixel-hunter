@@ -27,7 +27,7 @@ const onInputClick = (evt, index) => {
 
   if (res !== undefined) {
     // получаем время
-    const time = 15; // mock data
+    const time = 9; // mock data
     const resp = {res, time};
     processResponse(index, resp);
   }

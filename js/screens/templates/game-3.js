@@ -37,7 +37,7 @@ export default (type, index, data, header, footer) => {
       }
 
       const res = arrElm[0].type === RIGHT_TYPE ? RESP_OK : RESP_FAIL;
-      const time = 15; // mock data
+      const time = 25; // mock data
       const resp = {res, time};
 
       processResponse(index, resp);

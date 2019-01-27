@@ -12,6 +12,32 @@ export const footerData = [
   // {}, {}, {}, {}, {},
 ];
 
+export const footerDataHistoryFail = [
+  {res: 0, time: 2},
+  {res: 1, time: 2},
+  {res: 0, time: 15},
+  {res: 1, time: 30},
+  {res: 1, time: 30},
+  {res: 0, time: 30},
+  {res: 1, time: 30},
+  {res: 1, time: 30},
+  {res: 0, time: 30},
+  {res: 1, time: 30},
+];
+
+export const footerDataHistoryOK = [
+  {res: 1, time: 1},
+  {res: 1, time: 2},
+  {res: 1, time: 9},
+  {res: 1, time: 8},
+  {res: 1, time: 15},
+  {res: 1, time: 15},
+  {res: 0, time: 15},
+  {res: 1, time: 25},
+  {res: 1, time: 30},
+  {res: 0, time: 25},
+];
+
 // -1
 export const firstGameDataOne = {
   images: [

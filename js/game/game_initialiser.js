@@ -52,9 +52,24 @@ const getGameScreens = () => {
 };
 
 export const initResp = () => {
-//  return [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
-  return mock.footerData.slice(0);
+  return [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+  // return mock.footerData.slice(0);
 };
+
+export const initHistory = (mode) => {
+  if (!mode) {
+    return [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+  }
+
+  if (mode === 1) {
+    return mock.footerDataHistoryFail.slice(0);
+  } else {
+    return mock.footerDataHistoryOK.slice(0);
+
+  }
+
+};
+
 
 export default () => {
 
