@@ -1,5 +1,4 @@
 // главный модуль
+import {init} from './game/index';
 
-import initScreens from './screens/index';
-
-initScreens();
+init();
