@@ -134,15 +134,3 @@ const showNextScreeenNew = (index) => {
 };
 
 export default init;
-
-// *********************************************** D E P R I C A T E D *************
-// (depricated) ф-ия выводит экран
-// const showNextScreeen = (key) => {
-//   const ln = mainElement.children.length;
-//   for (let i = 0; i < ln; i++) {
-//     mainElement.children[0].remove();
-//   }
-
-//   mainElement.appendChild(SCREENS[key](footerData));
-
-// };

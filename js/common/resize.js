@@ -44,6 +44,6 @@ export default (frame, given) => {
     }
   }
 
-  return {width, height};
+  return {width: Math.floor(width), height: Math.floor(height)};
 
 };
