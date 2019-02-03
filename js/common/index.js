@@ -1,5 +1,5 @@
 import * as consts from './constants';
 
-export {default as calcUserPoints} from './score-utils';
 export {consts};
-
+export {default as calcUserPoints} from './score-utils';
+export {default as resize} from './resize';
