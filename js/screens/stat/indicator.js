@@ -1,4 +1,4 @@
-import {createElementFromTemplate} from '../util';
+import {createElementFromTemplate} from '../../common/util';
 import {
   TIME_FAST,
   TIME_SLOW,

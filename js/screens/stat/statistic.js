@@ -3,7 +3,7 @@ import {CURRENT_STAT} from '../../common/constants';
 import getTable from './table';
 
 const TITLE_VICTORY = `Победа!`;
-const TITLE_FAIL = `Поражение (: `;
+const TITLE_FAIL = `Поражение :( `;
 
 const section = (title) => {
   const element = document.createElement(`section`);

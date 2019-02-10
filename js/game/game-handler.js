@@ -1,5 +1,5 @@
 // модуль процессор
-import {initProcessResponse, initReturnProc} from '../screens/util';
+import {initProcessResponse, initReturnProc} from '../common/util';
 import initGame, {SCREENS, initResp, initHistory} from './game_initialiser';
 import initHeader from '../screens/header/index';
 import {setFooter as initFooter} from '../screens/footer/index';

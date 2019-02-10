@@ -1,6 +1,6 @@
 // Модуль "game-3"
 
-import {createElementFromTemplate, processResponse} from '../util';
+import {createElementFromTemplate, processResponse} from '../../common/util';
 import initForm from '../form/index';
 import {RESP_OK, RESP_FAIL} from '../../common/constants';
 

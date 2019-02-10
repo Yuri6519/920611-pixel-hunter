@@ -1,6 +1,6 @@
 // Модуль "stats"
 
-import {createElementFromTemplate} from '../util';
+import {createElementFromTemplate} from '../../common/util';
 import {statistic} from '../stat/index';
 
 export default (_, __, ___, header, ____, respData) => {

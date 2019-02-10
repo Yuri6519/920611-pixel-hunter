@@ -1,6 +1,6 @@
 // Модуль "rules"
 
-import {createElementFromTemplate, processResponse} from '../util';
+import {createElementFromTemplate, processResponse} from '../../common/util';
 
 export default (__, index, _, header) => {
   const content = `

@@ -1,6 +1,6 @@
 // Модуль "greeting"
 
-import {createElementFromTemplate, processResponse} from '../util';
+import {createElementFromTemplate, processResponse} from '../../common/util';
 
 export default (_, index) => {
 
