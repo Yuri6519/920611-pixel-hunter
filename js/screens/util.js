@@ -25,6 +25,3 @@ export const returnToGreetngScreen = (element) => {
 };
 
 
-//* **************************** DEPRICATED **********************************
-
-

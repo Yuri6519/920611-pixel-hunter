@@ -1,4 +1,4 @@
-import {resize} from '../../../common/index';
+// import {resize} from '../../../common/index';
 
 export default (placeholder, src, alt, width, height) => {
 
@@ -11,7 +11,9 @@ export default (placeholder, src, alt, width, height) => {
 
   img.src = src;
 
-  const {width: imgWidth, height: imgHeight} = resize({width, height}, {width: img.width, height: img.height});
+  // const {width: imgWidth, height: imgHeight} = resize({width, height}, {width: img.width, height: img.height});
 
-  return `<img src="${src ? src : placeholder}" alt="${alt}" width="${imgWidth}" height="${imgHeight}">`;
+  // return `<img src="${src ? src : placeholder}" alt="${alt}" width="${imgWidth}" height="${imgHeight}">`;
+
+  return `<img src="${src ? src : placeholder}" alt="${alt}" width="${width}" height="${height}">`;
 };
