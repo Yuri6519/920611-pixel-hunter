@@ -1,4 +1,4 @@
-import {FIRST_GAME, SECOND_GAME, THIRD_GAME} from '../../common/constants';
+import {FIRST_GAME, SECOND_GAME, THIRD_GAME} from '../../../common/constants';
 import renderGameOptions from './game-options/index';
 
 const GAME_1_IMG_COUNT = 2;
@@ -12,7 +12,7 @@ const mapTypeToClassName = {
 };
 
 // формируем форму в зависимости от переданных данных
-export default (data, type) => {
+export default ({data, type}) => {
   if (!data) {
     throw new Error(`FORM::не переданы данные`);
   }

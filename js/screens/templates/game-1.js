@@ -1,88 +1,71 @@
 // Модуль "game-1"
 
-import {createElementFromTemplate, processResponse} from '../../common/util';
-import initForm from '../form/index';
+import {processResponse} from '../../common/util';
 import {RESP_OK, RESP_FAIL} from '../../common/constants';
+import FirstScreenView from '../../view/screens/first-screen-view';
 
-const responses = {};
+let responses = {};
 
-const onInputClick = (evt, index) => {
-  // запоминаем выбор пользователя
-  responses[evt.target.name].checkValue = evt.target.value;
+const handleInput = (evt, index, images) => {
+  let src = evt.target.parentNode;
+  src = src ? src.parentNode : null;
+  src = src ? src.querySelector(`img`) : null;
+  src = src ? src.src : null;
 
-  // проверка на все ответы
-  let res;
-  for (const key in responses) {
-    if (responses[key].checkValue) {
+  if (!src) {
+    throw new Error(`Невреная структура элемента input: ${evt.target}`);
+  }
 
-      if (res === undefined || res === RESP_OK) {
-        // переопределяем
-        res = responses[key].checkValue === responses[key].type ? RESP_OK : RESP_FAIL;
-      }
-    } else {
-      res = undefined;
-      break;
+  // запомним выбор пользователя
+  const value = evt.target.value;
+
+  for (const itr of images) {
+    if (itr.src === src) {
+      const {type} = itr;
+      responses[src] = {type, value};
     }
   }
 
-  if (res !== undefined) {
+  // проверим
+  let res = images.every((itr) => {
+    const {src: imgSrc} = itr;
+    return responses[imgSrc];
+  });
+
+  if (res) {
+    for (const key in responses) {
+      if (typeof key === `string`) {
+        const {type, value: resValue} = responses[key];
+        res = type === resValue ? RESP_OK : RESP_FAIL;
+        if (res === RESP_FAIL) {
+          break;
+        }
+      }
+    }
+
     // получаем время
     const time = 9; // mock data
     const resp = {res, time};
     processResponse(index, resp);
+
   }
+
+};
+
+const onInputClick = (index, images) => {
+  return (evt) => {
+    handleInput(evt, index, images);
+  };
 };
 
 export default (type, index, data, header, footer) => {
 
-  const content = `
-  <div>
-    <section class="game">
-      <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
-      ${initForm(data, type)}
-    </section>
-  </div>
-  `;
+  responses = {};
 
-  const element = createElementFromTemplate(content);
-
-  const game = element.querySelector(`.game`);
-
-  // заголовок
-  element.querySelector(`div`).insertBefore(header, game);
-
-  // footer
-  game.appendChild(footer);
-
-  Array.from(element.querySelectorAll(`.game__option`)).forEach((itr) => {
-    const srcImg = itr.querySelector(`img`).src;
-
-    const {images} = data;
-    let typeImg;
-    for (const obj of images) {
-      typeImg = !typeImg && obj.src === srcImg ? obj.type : typeImg;
-    }
-
-    if (!typeImg) {
-      throw new Error(`Не найден image gпо src = ${srcImg}`);
-    }
-
-    Array.from(itr.querySelectorAll(`.game__answer`)).forEach((elm) => {
-
-      const inp = elm.querySelector(`input`);
-
-      responses[inp.name] = {
-        type: typeImg,
-        checkValue: undefined,
-      };
-
-      inp.addEventListener(`click`, (evt) => {
-        onInputClick(evt, index);
-      });
-
-    });
-
-  });
+  const {images} = data;
+  const firstScreenView = new FirstScreenView({type, data, header, footer});
+  firstScreenView.onInputClick = onInputClick(index, images.slice());
+  const element = firstScreenView.element;
 
   return element;
 

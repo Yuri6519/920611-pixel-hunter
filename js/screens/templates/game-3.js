@@ -1,49 +1,40 @@
 // Модуль "game-3"
 
-import {createElementFromTemplate, processResponse} from '../../common/util';
-import initForm from '../form/index';
+import {processResponse} from '../../common/util';
 import {RESP_OK, RESP_FAIL} from '../../common/constants';
+import ThirdScreenView from '../../view/screens/third-screen-view';
 
 const RIGHT_TYPE = `paint`;
 
+const handleOption = (evt, index, images) => {
+
+  const arrElm = images.filter((elm) => elm.src === evt.target.src);
+
+  if (!arrElm || arrElm.length === 0) {
+    throw new Error(`Не найден элемент в массиве для src = ${evt.target.src}`);
+  }
+
+  const res = arrElm[0].type === RIGHT_TYPE ? RESP_OK : RESP_FAIL;
+  const time = 25; // mock data
+  const resp = {res, time};
+
+  processResponse(index, resp);
+
+
+};
+
+const onOptiontClick = (index, images) => {
+  return (evt) => {
+    handleOption(evt, index, images);
+  };
+};
+
 export default (type, index, data, header, footer) => {
 
-  const content = `
-  <div>
-    <section class="game">
-      <p class="game__task">Найдите рисунок среди изображений</p>
-      ${initForm(data, type)}
-    </section>
-  </div>
-  `;
-
-  const element = createElementFromTemplate(content);
-
-  const game = element.querySelector(`.game`);
-
-  // заголовок
-  element.querySelector(`div`).insertBefore(header, game);
-
-  // footer
-  game.appendChild(footer);
-
-  Array.from(element.querySelectorAll(`.game__option`)).forEach((itr) => {
-    itr.addEventListener(`click`, (evt) => {
-      const {images} = data;
-      const arrElm = images.filter((elm) => elm.src === evt.target.src);
-
-      if (!arrElm || arrElm.length === 0) {
-        throw new Error(`Не найден элемент в массиве для src = ${evt.target.src}`);
-      }
-
-      const res = arrElm[0].type === RIGHT_TYPE ? RESP_OK : RESP_FAIL;
-      const time = 25; // mock data
-      const resp = {res, time};
-
-      processResponse(index, resp);
-
-    });
-  });
+  const {images} = data;
+  const secondScreenView = new ThirdScreenView({type, data, header, footer});
+  secondScreenView.onOptiontClick = onOptiontClick(index, images.slice());
+  const element = secondScreenView.element;
 
   return element;
 

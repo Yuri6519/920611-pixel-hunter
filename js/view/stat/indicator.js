@@ -1,4 +1,4 @@
-import {createElementFromTemplate} from '../../common/util';
+import IndicatorView from '../../view/indicator/indicator-view';
 import {
   TIME_FAST,
   TIME_SLOW,
@@ -18,7 +18,7 @@ export default (stat) => {
     throw new Error(`SCREENS::STAT::Не верно определен массив статистики::${stat}`);
   }
 
-  const li = stat.map((itr) => {
+  const classes = stat.map((itr) => {
     let result = CLASS_UNKNOWN;
     const time = itr.time;
     const res = itr.res;
@@ -31,13 +31,10 @@ export default (stat) => {
       }
     }
 
-    return `<li class="stats__result stats__result--${result}"></li>`;
-  }).join(``);
+    return result;
 
-  const content = `<ul class="stats">${li}</ul>`;
+  });
 
-  const element = createElementFromTemplate(content);
-
-  return element;
-
+  const indicatorView = new IndicatorView(classes);
+  return indicatorView.element;
 };
