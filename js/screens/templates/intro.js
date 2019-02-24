@@ -10,10 +10,7 @@ const handleClick = (index) => {
 };
 
 export default (_, index) => {
-
   const introView = new IntroView();
   introView.onClick = handleClick(index);
-
   return introView.element;
-
 };
