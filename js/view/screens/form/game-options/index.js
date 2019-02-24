@@ -1,4 +1,4 @@
-import {FIRST_GAME, SECOND_GAME, THIRD_GAME} from '../../../common/constants';
+import {FIRST_GAME, SECOND_GAME, THIRD_GAME} from '../../../../common/constants';
 import renderImage from './image';
 import renderLabel from './label';
 

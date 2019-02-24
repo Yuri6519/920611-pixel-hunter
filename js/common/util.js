@@ -18,10 +18,7 @@ export const initReturnProc = (index, fn) => {
 };
 
 // ф-ия возврата на экран приветствия
-export const returnToGreetngScreen = (element) => {
-  element.addEventListener(`click`, () => {
-    returnProc();
-  });
+export const returnToGreetngScreen = () => {
+  returnProc();
 };
-
 
