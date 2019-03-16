@@ -1,4 +1,4 @@
 // главный модуль
-import {init} from './game/index';
+import {init} from './old/game/index';
 
 init();

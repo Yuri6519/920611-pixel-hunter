@@ -2,7 +2,7 @@
   Модуль содержит представление экрана статистики
 */
 import AbstractView from '../abstract-view';
-import {statistic} from '../stat/index';
+import statistic from './statistic';
 
 class StatView extends AbstractView {
   constructor(initData) {

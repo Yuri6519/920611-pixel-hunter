@@ -26,7 +26,7 @@ const getScreen = (type, data, header, footer, resp) => {
   return {type, data, header, footer, resp};
 };
 
-const getGameScreens = () => {
+export const getGameScreens = () => {
   // const arr = [c.FIRST_GAME, c.SECOND_GAME, c.THIRD_GAME];
   // for (let i = 1; i <= 10; i++) {
   //   let ind = Math.floor(Math.random() * (arr.length) - 0) + 0;
