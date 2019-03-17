@@ -1,16 +1,16 @@
 import Storage from '../storage/index';
-import calcPoints from '../../common/score-utils';
-
 
 const END_OF_GAME = -1;
 
+const INITIAL_STATE = {
+  time: 0,
+  resp: [],
+};
+
 class GameModel {
-  constructor() {
-    this._state = {
-      time: 0,
-      resp: [],
-    };
-    this._game = this._init();
+  constructor(userName) {
+    this._userName = userName;
+    this.restart();
   }
 
   _init() {
@@ -19,6 +19,10 @@ class GameModel {
     }
 
     return this._storage.game;
+  }
+
+  get userName() {
+    return this._userName;
   }
 
   get state() {
@@ -54,6 +58,11 @@ class GameModel {
 
   tick(time) {
     this._state.time = time;
+  }
+
+  restart() {
+    this._state = INITIAL_STATE;
+    this._game = this._init();
   }
 
 

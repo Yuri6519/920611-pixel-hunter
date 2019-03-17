@@ -6,6 +6,8 @@ export const FIRST_GAME = `game-1`;
 export const SECOND_GAME = `game-2`;
 export const THIRD_GAME = `game-3`;
 export const STAT = `stats`;
+export const NO_LEVEL_SCREEN = `no_level_screen`;
+export const NEXT_LEVEL_SCREEN = `next_level_screen`;
 
 // score
 export const TIME_FAST = 10;

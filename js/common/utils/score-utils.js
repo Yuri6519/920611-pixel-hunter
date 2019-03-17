@@ -17,7 +17,7 @@ import {
   RES__BONUS_LIFE_NUMBER,
   RES_FINE_SLOW_NUMBER,
 
-} from './constants';
+} from '../constants/index';
 
 const points = (userScore) => {
   let res = 0;

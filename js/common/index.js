@@ -1,5 +1,5 @@
-import * as consts from './constants';
+import * as consts from './constants/index';
 
 export {consts};
-export {default as calcUserPoints} from './score-utils';
-export {default as resize} from './resize';
+export {points as calcUserPoints, resize} from './utils/index';
+export {default as AbstractView} from './views/abstract-view/index';
