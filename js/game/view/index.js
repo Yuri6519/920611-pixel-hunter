@@ -5,7 +5,7 @@ import {AbstractView} from '../../common/index';
 export default class GameView extends AbstractView {
 
   get template() {
-    return ``;
+    return `<span style="color: red; background: blue">HERE IS GHAME</span>`;
   }
 
 }

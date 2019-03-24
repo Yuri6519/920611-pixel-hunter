@@ -3,10 +3,6 @@ import {GREETING, RULES, NO_LEVEL_SCREEN, NEXT_LEVEL_SCREEN} from '../common/con
 const initialState = {currentScreen: NO_LEVEL_SCREEN};
 
 export default class WelcomeModel {
-  constructor() {
-    this.restart();
-  }
-
   get currentScreen() {
     return this._state.currentScreen;
   }
@@ -30,7 +26,7 @@ export default class WelcomeModel {
     this._state = initialState;
   }
 
-  setState(key) {
+  setState({key}) {
     this._state = {currentScreen: key};
   }
 
