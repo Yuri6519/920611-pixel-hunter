@@ -12,4 +12,3 @@ import {Appl} from './common/utils/index';
 init();
 
 Appl.showIntro();
-

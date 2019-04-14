@@ -1,12 +1,7 @@
-import Storage from '../storage/index';
-import {NEXT_LEVEL_SCREEN} from '../../common/constants/index';
+import Storage from '../../storage/index';
+import {NEXT_LEVEL_SCREEN} from '../../../common/constants/index';
 
 const END_OF_GAME = -1;
-
-const initialState = {
-  time: 0,
-  resp: [],
-};
 
 class GameModel {
   constructor(userName) {
@@ -56,13 +51,25 @@ class GameModel {
     return this._game[this.currentLevel].data;
   }
 
-  get nextScreen() {
-  }
-
   // как узнать жизни? и надо ли вообще...
   // get lives() {
   //   return this._game[this.currentLevel];
   // }
+
+  get nextScreen() {
+    const res = this.currentLevel === END_OF_GAME ? NEXT_LEVEL_SCREEN : this._game[this.currentLevel];
+    if (!res) {
+      throw new Error(`GameModel::nextScreen::bad res = ${res}`);
+    }
+
+    console.log(`GameModel::nextScreen::res.type::`, res.type);
+
+    return res.type;
+  }
+
+  get levelCount() {
+    return this._game.length;
+  }
 
   set resp(value) {
     this._state.resp.push(value);
@@ -76,7 +83,10 @@ class GameModel {
 
     console.log(`GameModel::restart::`);
 
-    this._state = initialState;
+    this._state = {
+      time: 0,
+      resp: [],
+    };
     this._init();
   }
 
@@ -84,16 +94,6 @@ class GameModel {
     this.resp = respParams;
   }
 
-  get nextScreen() {
-    const res = this.currentLevel === END_OF_GAME ? NEXT_LEVEL_SCREEN : this._game[this.currentLevel];
-    if (!res) {
-      throw new Error(`GameModel::nextScreen::bad res = ${res}`);
-    }
-
-    console.log(`GameModel::nextScreen::res.type::`, res.type);
-
-    return res.type;
-  }
 
 }
 

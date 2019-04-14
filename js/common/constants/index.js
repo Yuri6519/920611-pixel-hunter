@@ -13,7 +13,7 @@ export const NEXT_LEVEL_SCREEN = `next_level_screen`;
 export const TIME_FAST = 10;
 export const TIME_SLOW = 20;
 export const MAX_LIFES_COUNT = 3;
-export const MAX_QUESTIONS = 10;
+export const MAX_LEVELS = 10;
 export const LIFE_SCORE = 50;
 export const CORRECT_ANSWER = 1;
 export const CORRECT_ANSWER_POINTS = 100;
@@ -37,3 +37,7 @@ export const RES_TOTAL = `RES_TOTAL`;
 // stat selectors
 export const CURRENT_STAT = `CURRENT_STAT`;
 export const STAT_NEXT = `STAT_`;
+
+// header constants
+export const HEADER_KEY_TIMER = `timer`;
+export const HEADER_KEY_LIVES = `lives`;

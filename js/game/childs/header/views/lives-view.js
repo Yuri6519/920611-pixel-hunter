@@ -1,8 +1,8 @@
 /*
   Модуль содержит представление изображений количества жизней на заголовке
 */
-import AbstractView from '../abstract-view';
-import {MAX_LIFES_COUNT, MAX_LEVELS} from '../../common/constants';
+import {AbstractView} from '../../../../common/index';
+import {MAX_LIFES_COUNT} from '../../../../common/constants/index';
 
 const SRC_EMPTY = `empty`;
 const SRC_FULL = `full`;
@@ -11,26 +11,20 @@ const ALT_FULL = `Life`;
 
 
 class LivesView extends AbstractView {
-  constructor(answers) {
+  constructor(count) {
     super();
-
-    if (!answers || answers.length !== MAX_LEVELS) {
-      throw new Error(`SCREEN::HEADER::Не верно определен массив ответов::${answers}, length=${answers.length}`);
-    }
-
-    this._answers = answers;
+    this._count = count !== undefined ? count : MAX_LIFES_COUNT;
   }
 
   get template() {
-    let errLivesCount = this._answers.filter((itr) => (itr.res === 0)).length;
-
+    let livesCount = this._count;
     let imgStr = ``;
 
     for (let i = 1; i <= MAX_LIFES_COUNT; i++) {
-      const src = errLivesCount > 0 ? SRC_EMPTY : SRC_FULL;
-      const alt = errLivesCount > 0 ? ALT_EMPTY : ALT_FULL;
+      const src = livesCount > 0 ? SRC_FULL : SRC_EMPTY;
+      const alt = livesCount > 0 ? ALT_FULL : ALT_EMPTY;
       imgStr += `<img src="img/heart__${src}.svg" class="game__heart" alt="${alt}" width="31" height="27">`;
-      errLivesCount--;
+      livesCount--;
     }
 
     return `<div class="game__lives">${imgStr}</div>`;

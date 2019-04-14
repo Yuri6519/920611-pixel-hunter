@@ -3,8 +3,8 @@ import {Appl} from '../common/utils/index';
 
 export default class IntroPresenter {
   constructor() {
-    this._content = new IntroView();
-    this._root = this._content.element;
+    this._view = new IntroView();
+    this._root = this._view.element;
     this._root.onclick = this.handleClick;
   }
 
@@ -13,7 +13,7 @@ export default class IntroPresenter {
   }
 
   handleClick() {
-    Appl.showWelcome();
+    Appl.showWelcome(); 
   }
 
 }

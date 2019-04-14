@@ -2,7 +2,7 @@ import IndicatorView from '../../view/indicator/indicator-view';
 import {
   TIME_FAST,
   TIME_SLOW,
-  MAX_QUESTIONS,
+  MAX_LEVELS,
   CORRECT_ANSWER} from '../../common/constants';
 
 
@@ -14,7 +14,7 @@ const CLASS_CORRECT = `correct`;
 
 export default (stat) => {
 
-  if (!stat || stat.length !== MAX_QUESTIONS) {
+  if (!stat || stat.length !== MAX_LEVELS) {
     throw new Error(`SCREENS::STAT::Не верно определен массив статистики::${stat}`);
   }
 

@@ -11,8 +11,8 @@ export default class WelcomePresenter extends AbstractPresenter {
   constructor(model) {
     super(model);
 
-    this._content = new WelcomeView();
-    this._root = this._content.element;
+    this._view = new WelcomeView();
+    this._root = this._view.element;
   }
 
   initMapStruct() {

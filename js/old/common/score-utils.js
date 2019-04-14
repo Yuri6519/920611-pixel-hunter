@@ -2,7 +2,7 @@ import {
   TIME_FAST,
   TIME_SLOW,
   MAX_LIFES_COUNT,
-  MAX_QUESTIONS,
+  MAX_LEVELS,
   LIFE_SCORE,
   ERROR_LIFES_OVER,
   RES_RIGHT_ANSWER,
@@ -38,7 +38,7 @@ const points = (userScore) => {
     throw new Error(`not enaugh actual params`);
   }
 
-  if (userScore.length !== MAX_QUESTIONS) {
+  if (userScore.length !== MAX_LEVELS) {
     res = -1;
   } else {
 

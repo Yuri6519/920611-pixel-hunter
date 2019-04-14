@@ -7,6 +7,8 @@ const getScreen = (type, data) => {
 };
 
 export const getGameScreens = () => {
+  // инициализировать по c.MAX_LEVELS !!!!!!!!
+
   // моковые данные
   const res = [];
 

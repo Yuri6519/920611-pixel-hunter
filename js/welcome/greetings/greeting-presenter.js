@@ -3,8 +3,8 @@ import {GREETING} from '../../common/constants/index';
 
 export default class GreetingPresenter {
   constructor(onResponse) {
-    this._content = new GreetingView();
-    this._root = this._content.element;
+    this._view = new GreetingView();
+    this._root = this._view.element;
     this._root.onclick = this.handleClick.bind(this);
     this._onResponse = onResponse;
   }

@@ -3,9 +3,9 @@ import {RULES} from '../../common/constants/index';
 
 export default class RulesPresenter {
   constructor(onResponse) {
-    this._content = new RulesView();
-    this._content.onSubmit = this.handleSubmit.bind(this);
-    this._root = this._content.element;
+    this._view = new RulesView();
+    this._view.onSubmit = this.handleSubmit.bind(this);
+    this._root = this._view.element;
     this._onResponse = onResponse;
   }
 
