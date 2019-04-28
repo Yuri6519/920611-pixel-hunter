@@ -24,8 +24,8 @@ export default class AbstractPresenter {
 
   invokeNextLevel() {}
 
-  processLevel() {
-    const nextScreen = this.model.nextScreen;
+  processLevel(next) {
+    const nextScreen = next || this.model.nextScreen;
     const levelFunc = this._mapScreensToFunc[nextScreen];
 
     if (levelFunc) {
@@ -36,12 +36,14 @@ export default class AbstractPresenter {
   }
 
   beforeStart() {}
+  afterStart() {}
 
   start() {
     this.beforeStart();
     this.model.restart();
     this._respParams = null;
     this.processLevel();
+    this.afterStart();
   }
 
   processResponse(key, respParams) {

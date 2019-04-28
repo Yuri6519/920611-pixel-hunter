@@ -1,21 +1,19 @@
 
 import ButtonBackView from '../../../../common/views/button-back-view/index';
-import HeaderView from '../views/header-view';
+import {HeaderView} from '../../../../common/index';
 import TimerView from '../views/timer-view';
 import LivesView from '../views/lives-view';
 import {HEADER_KEY_TIMER, HEADER_KEY_LIVES} from '../../../../common/constants/index';
-import {Appl} from '../../../../common/utils/index';
-
 
 export default class HeaderPresenter {
-  constructor(model) {
+  constructor(model, onButtonBackClick) {
     this._model = model;
 
     this._view = new HeaderView();
     this._root = this._view.element;
 
     const btnView = new ButtonBackView();
-    btnView.onClick = this.onButtonBackClick.bind(this);
+    btnView.onClick = onButtonBackClick;
     this._btnElement = btnView.element;
 
     this._timerElement = new TimerView().element;
@@ -58,10 +56,6 @@ export default class HeaderPresenter {
       }
     }
 
-  }
-
-  onButtonBackClick() {
-    Appl.showWelcome();
   }
 
   renderTimer() {

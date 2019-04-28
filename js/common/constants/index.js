@@ -22,6 +22,7 @@ export const ERROR_LIFES_OVER = -999;
 // responses
 export const RESP_OK = 1;
 export const RESP_FAIL = 0;
+export const RESP_UNKNOWN = -1;
 
 // answer selectors
 export const RES_STATUS = `RES_STATUS`;
@@ -33,6 +34,7 @@ export const RES__BONUS_LIFE_NUMBER = `RES__BONUS_LIFE_NUMBER`;
 export const RES_FINE_SLOW = `RES_FINE_SLOW`;
 export const RES_FINE_SLOW_NUMBER = `RES_FINE_SLOW_NUMBER`;
 export const RES_TOTAL = `RES_TOTAL`;
+export const RES_LIFE_NUMBER = `RES_LIFE_NUMBER`;
 
 // stat selectors
 export const CURRENT_STAT = `CURRENT_STAT`;
@@ -41,3 +43,10 @@ export const STAT_NEXT = `STAT_`;
 // header constants
 export const HEADER_KEY_TIMER = `timer`;
 export const HEADER_KEY_LIVES = `lives`;
+
+// timer
+export const MAX_TIME_FOR_ONE_LEVEL = 30;
+
+// settings
+export const REG_WORK = `work`;
+export const REG_TEST = `test`;

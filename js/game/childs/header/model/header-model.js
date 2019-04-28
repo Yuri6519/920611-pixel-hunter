@@ -1,7 +1,7 @@
-import {HEADER_KEY_TIMER, HEADER_KEY_LIVES, MAX_LIFES_COUNT} from '../../../../common/constants/index';
+import {HEADER_KEY_TIMER, HEADER_KEY_LIVES, MAX_LIFES_COUNT, MAX_TIME_FOR_ONE_LEVEL} from '../../../../common/constants/index';
 
 const initialState = {
-  time: 0,
+  time: MAX_TIME_FOR_ONE_LEVEL,
   lives: MAX_LIFES_COUNT,
 };
 
@@ -21,8 +21,8 @@ export default class HeaderModel {
       throw new Error(`HeaderModel::setState:: bad new state::`, state);
     }
 
-    const {time, lives} = state;
     const {time: newTime, lives: newLives} = this._state;
+    const {time, lives = newLives} = state;
     this._renderKeys[HEADER_KEY_TIMER] = time !== newTime;
     this._renderKeys[HEADER_KEY_LIVES] = lives !== newLives;
 

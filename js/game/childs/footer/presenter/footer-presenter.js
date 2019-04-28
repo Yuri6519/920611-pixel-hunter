@@ -7,7 +7,8 @@ export default class FooterPresenter {
     this._view = new FooterView();
     this._root = this._view.element;
 
-    this._indicatorElement = new IndicatorPresenter(new IndicatorModel(count)).element;
+    this._indicator = new IndicatorPresenter(new IndicatorModel(count));
+    this._indicatorElement = this._indicator.element;
     this._root.appendChild(this._indicatorElement);
   }
 
@@ -16,7 +17,7 @@ export default class FooterPresenter {
   }
 
   update(data) {
-    this._indicatorElement.update(data);
+    this._indicator.update(data);
   }
 
 }

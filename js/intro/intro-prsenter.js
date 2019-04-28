@@ -13,7 +13,7 @@ export default class IntroPresenter {
   }
 
   handleClick() {
-    Appl.showWelcome(); 
+    Appl.showWelcome();
   }
 
 }

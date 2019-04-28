@@ -1,8 +1,23 @@
 import GameView from '../view/index';
-import {FIRST_GAME, SECOND_GAME, THIRD_GAME, MAX_LEVELS} from '../../../common/constants/index';
 import {AbstractPresenter} from '../../../common/index';
 import {HeaderPresenter, HeaderModel} from '../../childs/header/index';
 import {FooterPresenter} from '../../childs/footer/index';
+import points from '../../../common/utils/score-utils';
+import {ScreenFirstModel, ScreenFirstPresenter} from '../../childs/screens/index';
+import {ScreenSecondModel, ScreenSecondPresenter} from '../../childs/screens/index';
+import {ScreenThirdModel, ScreenThirdPresenter} from '../../childs/screens/index';
+import {Appl} from '../../../common/utils/index';
+import {
+  FIRST_GAME,
+  SECOND_GAME,
+  THIRD_GAME,
+  MAX_LEVELS,
+  ERROR_LIFES_OVER,
+  NEXT_LEVEL_SCREEN,
+  MAX_TIME_FOR_ONE_LEVEL,
+  RESP_FAIL} from '../../../common/constants/index';
+
+const ONE_SECOND = 1000;
 
 export default class GamePresenter extends AbstractPresenter {
   constructor(model) {
@@ -13,7 +28,8 @@ export default class GamePresenter extends AbstractPresenter {
     this._view = new GameView();
     this._root = this._view.element;
 
-    this._headerElement = new HeaderPresenter(new HeaderModel()).element;
+    this._header = new HeaderPresenter(new HeaderModel(), this.onButtonBackClick.bind(this));
+    this._headerElement = this._header.element;
     this._root.appendChild(this._headerElement);
 
     const gameSection = document.createElement(`section`);
@@ -22,11 +38,17 @@ export default class GamePresenter extends AbstractPresenter {
     this._gameElement = document.createElement(`div`);
     gameSection.appendChild(this._gameElement);
 
-    this._footerElement = new FooterPresenter(MAX_LEVELS).element;
+    this._footer = new FooterPresenter(MAX_LEVELS);
+    this._footerElement = this._footer.element;
     gameSection.appendChild(this._footerElement);
 
     this._root.appendChild(gameSection);
 
+  }
+
+  onButtonBackClick() {
+    this.stopTimer();
+    Appl.showWelcome();
   }
 
   get data() {
@@ -34,7 +56,29 @@ export default class GamePresenter extends AbstractPresenter {
   }
 
   get resp() {
-    return this.model.resp;
+    // дополнить до MAX_LEVELS
+    const {resp} = this.model;
+    const result = resp.slice(0);
+    const count = MAX_LEVELS - result.length;
+    for (let i = 0; i < count; i++) {
+      result.push({});
+    }
+    return result;
+  }
+
+  _tick() {
+    this.model.tick();
+    this._header.update({time: (MAX_TIME_FOR_ONE_LEVEL - this.model.time)});
+
+    if (this.model.time > MAX_TIME_FOR_ONE_LEVEL) {
+      this.processResponse(RESP_FAIL);
+    } else {
+      this._timer = setTimeout(() => this._tick(), ONE_SECOND);
+    }
+  }
+
+  stopTimer() {
+    clearInterval(this._timer);
   }
 
   initMapStruct() {
@@ -44,30 +88,79 @@ export default class GamePresenter extends AbstractPresenter {
     this._mapScreensToFunc[THIRD_GAME] = this.processThirdGame.bind(this);
   }
 
-  showLevel(level) {
+  showLevel(Model, Presenter) {
+    const presenter = new Presenter(new Model(this.data));
+    presenter.processResponse = this.processResponse.bind(this);
+    const level = presenter.element;
     this._gameElement.innerHTML = ``;
     this._gameElement.appendChild(level);
   }
 
+  getLives(resp) {
+    const {RES_STATUS: resState, RES_LIFE_NUMBER: result} = points(resp);
+    return resState < 0 ? resState : result;
+  }
+
+  processResponse(res) {
+    // 1. Остановить таймер
+    this.stopTimer();
+
+    // 2. Получить время из модели
+    const time = this.model.time;
+
+    // 3. Сформировать новый state для модели
+    this.model.setState(
+        {
+          time: -1,
+          respParams: {res, time},
+        }
+    );
+
+    // 4. Получить массив ответов = this.resp
+
+    // 5. Посчитать жизни
+    const lives = this.getLives(this.resp);
+
+    // ПРИНЯТЬ РЕШЕНИЕ НА ВЫХОД В СТАТИСТИКУ, ЕСЛИ ЖИЗНЕЙ НЕ ОСТАЛОСЬ
+    let next = null;
+    if (lives === ERROR_LIFES_OVER) {
+
+      // переход на статистику
+      next = NEXT_LEVEL_SCREEN;
+
+    } else if (lives < 0) {
+      throw new Error(`GamePresenter::processResponse::pointScore ERROR::code = ${lives}`);
+    }
+
+    // 5. Изменить заголовок
+    this._header.update({time: MAX_TIME_FOR_ONE_LEVEL, lives});
+
+    // 6. Изменить футер
+    this._footer.update(this.resp);
+
+
+    // 7. Перейти на новый уровень
+    this.processLevel(next);
+
+  }
+
   processFirstGame() {
-    console.log(`GamePresenter::processFirstGame::data::`, this.data);
-    console.log(`GamePresenter::processFirstGame::resp::`, this.resp);
-
-
+    this.showLevel(ScreenFirstModel, ScreenFirstPresenter);
+    this._tick();
   }
 
   processSecondGame() {
-    console.log(`GamePresenter::processSecondGame::data::`, this.data);
-    console.log(`GamePresenter::processSecondGame::resp::`, this.resp);
+    this.showLevel(ScreenSecondModel, ScreenSecondPresenter);
+    this._tick();
   }
 
   processThirdGame() {
-    console.log(`GamePresenter::processThirdGame::data::`, this.data);
-    console.log(`GamePresenter::processThirdGame::resp::`, this.resp);
+    this.showLevel(ScreenThirdModel, ScreenThirdPresenter);
+    this._tick();
   }
 
   invokeNextLevel() {
-    console.log(`GamePresenter::invokeNextLevel::this::`, this);
+    Appl.showStatistics(this.resp);
   }
 
 

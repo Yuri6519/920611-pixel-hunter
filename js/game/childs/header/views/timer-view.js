@@ -2,13 +2,12 @@
   Модуль содержит представление таймера на заголовке
 */
 import {AbstractView} from '../../../../common/index';
-
-const INITIAL_TIME = 0;
+import {MAX_TIME_FOR_ONE_LEVEL} from '../../../../common/constants/index';
 
 class TimerView extends AbstractView {
   constructor(time) {
     super();
-    this._time = time || INITIAL_TIME;
+    this._time = (time === undefined) || (time === null) ? MAX_TIME_FOR_ONE_LEVEL : time;
   }
 
   get template() {

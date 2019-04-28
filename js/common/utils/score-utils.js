@@ -16,6 +16,7 @@ import {
   RES_BONUS_SPEED_NUMBER,
   RES__BONUS_LIFE_NUMBER,
   RES_FINE_SLOW_NUMBER,
+  RES_LIFE_NUMBER,
 
 } from '../constants/index';
 
@@ -23,15 +24,16 @@ const points = (userScore) => {
   let res = 0;
 
   const result = {
-    RES_STATUS: 0,
-    RES_RIGHT_ANSWER: 0,
-    RES_BONUS_SPEED: 0,
-    RES_BONUS_SPEED_NUMBER: 0,
-    RES__BONUS_LIFE: 0,
-    RES__BONUS_LIFE_NUMBER: 0,
-    RES_FINE_SLOW: 0,
-    RES_FINE_SLOW_NUMBER: 0,
-    RES_TOTAL: 0,
+    [RES_STATUS]: 0,
+    [RES_RIGHT_ANSWER]: 0,
+    [RES_BONUS_SPEED]: 0,
+    [RES_BONUS_SPEED_NUMBER]: 0,
+    [RES__BONUS_LIFE]: 0,
+    [RES__BONUS_LIFE_NUMBER]: 0,
+    [RES_FINE_SLOW]: 0,
+    [RES_FINE_SLOW_NUMBER]: 0,
+    [RES_TOTAL]: 0,
+    [RES_LIFE_NUMBER]: 0,
   };
 
   if (userScore === undefined || !userScore || userScore === null) {
@@ -73,6 +75,9 @@ const points = (userScore) => {
 
   // штраф за медлительность
   result[RES_FINE_SLOW] = result[RES_FINE_SLOW_NUMBER] * LIFE_SCORE;
+
+  // чистые жизни
+  result[RES_LIFE_NUMBER] = MAX_LIFES_COUNT - errCount;
 
   // очки за жизни
   result[RES__BONUS_LIFE_NUMBER] = userScore.every((itr) => itr.res !== undefined && itr.time !== undefined) ? (MAX_LIFES_COUNT - errCount) : 0;

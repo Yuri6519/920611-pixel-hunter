@@ -11,19 +11,8 @@ class GameModel {
   _init() {
     if (!this._storage) {
       this._storage = new Storage();
-
-      console.log(`GameModel::_init::new _storage::`, this._storage);
     }
     this._game = this._storage.game;
-
-    console.log(`GameModel::_init::_userName::`, this._userName);
-
-    // console.log(`GameModel::_init::_storage::`, this._storage);
-
-    console.log(`GameModel::_init::_game::`, this._game);
-
-    console.log(`GameModel::_init::_state::`, this._state);
-
   }
 
   get userName() {
@@ -51,19 +40,11 @@ class GameModel {
     return this._game[this.currentLevel].data;
   }
 
-  // как узнать жизни? и надо ли вообще...
-  // get lives() {
-  //   return this._game[this.currentLevel];
-  // }
-
   get nextScreen() {
-    const res = this.currentLevel === END_OF_GAME ? NEXT_LEVEL_SCREEN : this._game[this.currentLevel];
+    const res = this.currentLevel === END_OF_GAME ? {type: NEXT_LEVEL_SCREEN} : this._game[this.currentLevel];
     if (!res) {
       throw new Error(`GameModel::nextScreen::bad res = ${res}`);
     }
-
-    console.log(`GameModel::nextScreen::res.type::`, res.type);
-
     return res.type;
   }
 
@@ -75,23 +56,21 @@ class GameModel {
     this._state.resp.push(value);
   }
 
-  tick(time) {
-    this._state.time = time;
+  tick() {
+    this._state.time++;
   }
 
   restart() {
-
-    console.log(`GameModel::restart::`);
-
     this._state = {
-      time: 0,
+      time: -1,
       resp: [],
     };
     this._init();
   }
 
-  setState({_, respParams}) {
+  setState({time, respParams}) {
     this.resp = respParams;
+    this._state.time = time;
   }
 
 
