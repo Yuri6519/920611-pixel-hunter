@@ -73,7 +73,7 @@ const mapTypeToOptiondata = {
   },
 };
 
-const render = (obj, data) => {
+const render = (obj, data, modelType) => {
   if (!obj) {
     throw new Error(`game-options::render::не найден объект в mapTypeToOptiondata по переданному ключу`);
   }
@@ -110,17 +110,16 @@ const render = (obj, data) => {
         return renderLabel(type, name, span, styled);
       }).join(``);
     }
-
-    const style = (regime === REG_TEST) && (srcType === LABEL_TYPE_PAINT) ? `style="border-width: 10px; border-color: green;"` : null;
+    const style = (regime === REG_TEST) && modelType && (srcType === modelType) ? `style="border-width: 10px; border-color: green;"` : null;
     res += `<div class="game__option" ${lbl ? null : style}>${img}${lbl}</div>`;
   }
 
   return res;
 };
 
-export default (type, data) => {
+export default (type, data, modelType) => {
 
-  const content = render(mapTypeToOptiondata[type], data);
+  const content = render(mapTypeToOptiondata[type], data, modelType);
 
   return content;
 };

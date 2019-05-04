@@ -37,7 +37,7 @@ class GameModel {
   }
 
   get currentLevelData() {
-    return this._game[this.currentLevel].data;
+    return this._game[this.currentLevel];
   }
 
   get nextScreen() {

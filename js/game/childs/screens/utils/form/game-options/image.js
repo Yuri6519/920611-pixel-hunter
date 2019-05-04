@@ -1,19 +1,19 @@
-// import {resize} from '../../../common/index';
+import {resize} from '../../../../../../common//index';
+import gameData from '../../../../../../data/index';
 
-export default (placeholder, src, alt, width, height) => {
+export default (_, src, alt, width, height) => {
+  const img = gameData.getImage(src);
 
-  const img = document.createElement(`img`);
+  if (!img) {
+    throw new Error(`Не удалось получить из хранилища картинку для url = ${src}`);
+  }
 
-  // img.addEventListener(`load`, (evt) => {
-  //   imgW = evt.target.width;
-  //   imgH = evt.target.height;
-  // });
+  const {width: imgWidth, height: imgHeight} = resize({width, height}, {width: img.width, height: img.height});
 
-  img.src = src;
+  img.width = imgWidth;
+  img.height = imgHeight;
+  img.alt = alt;
 
-  // const {width: imgWidth, height: imgHeight} = resize({width, height}, {width: img.width, height: img.height});
+  return img.outerHTML;
 
-  // return `<img src="${src ? src : placeholder}" alt="${alt}" width="${imgWidth}" height="${imgHeight}">`;
-
-  return `<img src="${src ? src : placeholder}" alt="${alt}" width="${width}" height="${height}">`;
 };

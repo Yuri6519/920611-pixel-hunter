@@ -3,6 +3,7 @@ import {IntroPresenter} from '../intro/index';
 import {WelcomeModel, WelcomePresenter} from '../welcome/index';
 import {GameModel, GamePresenter} from '../game/index';
 import {StatModel, StatPresenter} from '../statistics/index';
+import {ErrorPresenter} from '../common/components/error/index';
 
 const mainElement = document.querySelector(`#main`);
 const changeScreen = (element) => {
@@ -15,6 +16,7 @@ class Application {
   static showIntro() {
     const intro = new IntroPresenter();
     changeScreen(intro.element);
+    intro.loadData();
   }
 
   static showWelcome() {
@@ -32,10 +34,19 @@ class Application {
   static showStatistics(currentSatistics) {
     // непонятно куда сохранять статистику игры и возможно надо в Game сохранить на сервер
     // а в статистике взять все с сервера
-    // пока передаю текцщцю статистику currentSatistics и мержу еее с мок - статистикой
+    // пока передаю текущую статистику currentSatistics и мержу еее с мок - статистикой
     const stat = new StatPresenter(new StatModel(currentSatistics));
     stat.init();
     changeScreen(stat.element);
+  }
+
+  static showError(errParam) {
+    const mes = typeof errParam === `object` ? errParam.message : errParam;
+    const errArr = mes.split(`:`);
+    const status = errArr[0];
+    const code = errArr[1];
+    const error = new ErrorPresenter({status, code});
+    changeScreen(error.element);
   }
 
 }

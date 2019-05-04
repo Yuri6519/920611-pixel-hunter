@@ -14,10 +14,11 @@ class ScreenThirdView extends AbstractView {
   onOptiontClick() {}
 
   get template() {
+    const {question} = this.initData;
     return `
     <div>
       <section class="game">
-        <p class="game__task">Найдите рисунок среди изображений</p>
+        <p class="game__task">${question}</p>
         ${initForm(this.initData)}
       </section>
     </div>

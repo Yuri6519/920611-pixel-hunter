@@ -14,10 +14,11 @@ class ScreenFirstView extends AbstractView {
   onInputClick() {}
 
   get template() {
+    const {question} = this.initData;
     return `
       <div>
         <section class="game">
-          <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
+          <p class="game__task">${question}</p>
           ${initForm(this.initData)}
         </section>
       </div>
