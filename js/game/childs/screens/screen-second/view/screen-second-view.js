@@ -14,10 +14,11 @@ class ScreenSecondView extends AbstractView {
   onInputClick() {}
 
   get template() {
+    const {question} = this.initData;
     return `
     <div>
       <section class="game">
-        <p class="game__task">Угадай, фото или рисунок?</p>
+        <p class="game__task">${question}</p>
         ${initForm(this.initData)}
       </section>
     </div>    `;

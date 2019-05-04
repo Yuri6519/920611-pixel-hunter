@@ -1,6 +1,24 @@
+const adjustValues = (frameWidth, frameHeight, width, height, kt) => {
+  let newWidth = width;
+  let newHeight = height;
+
+  if (newWidth > frameWidth) {
+    newWidth = frameWidth;
+    newHeight = frameWidth / kt;
+  }
+
+  if (newHeight > frameHeight) {
+    newHeight = frameHeight;
+    newWidth = frameHeight * kt;
+  }
+
+  return {newWidth, newHeight};
+};
+
 export default (frame, given) => {
 
   if (!frame || !given) {
+    // throw new Error(`resize: Неверные входные данные`);
     return -1;
   }
 
@@ -44,6 +62,8 @@ export default (frame, given) => {
     }
   }
 
-  return {width: Math.floor(width), height: Math.floor(height)};
+  const {newWidth, newHeight} = adjustValues(frameWidth, frameHeight, width, height, kt);
+
+  return {width: Math.floor(newWidth), height: Math.floor(newHeight)};
 
 };

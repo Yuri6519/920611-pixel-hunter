@@ -1,4 +1,4 @@
-import {getGameScreens} from './init-data';
+import gameData from '../../data/index';
 
 export default class Storage {
   constructor() {
@@ -6,7 +6,7 @@ export default class Storage {
   }
 
   _getNewData() {
-    this._data = {game: getGameScreens()};
+    this._data = {game: gameData.data};
   }
 
   get game() {

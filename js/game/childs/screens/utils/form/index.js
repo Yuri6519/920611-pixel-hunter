@@ -12,16 +12,15 @@ const mapTypeToClassName = {
 };
 
 // формируем форму в зависимости от переданных данных
-export default ({data, type}) => {
-  if (!data) {
+export default ({images, type, modelType}) => {
+  if (!images) {
     throw new Error(`FORM::не переданы данные`);
   }
 
-  if (typeof data !== `object`) {
-    throw new Error(`FORM::переданы неверные данные. Вместо объекта передан тип: ${typeof data }`);
+  if (typeof images !== `object` || !(images instanceof Array)) {
+    throw new Error(`FORM::переданы неверные данные. Вместо объекта (массива) передан тип: ${typeof images }`);
   }
 
-  const {images} = data;
   const className = images && mapTypeToClassName[images.length] ? mapTypeToClassName[images.length].class : undefined;
   const game = images && mapTypeToClassName[images.length] ? mapTypeToClassName[images.length].game : undefined;
 
@@ -33,7 +32,7 @@ export default ({data, type}) => {
     throw new Error(`FORM:: переданный тип не соответствует данным. Передан ${type}, ожидается ${game}`);
   }
 
-  const formContent = renderGameOptions(game, images);
+  const formContent = renderGameOptions(game, images, modelType);
 
   const content = `<form class="game__content ${className}">${formContent}</form>`;
 

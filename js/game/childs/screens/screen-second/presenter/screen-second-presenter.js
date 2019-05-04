@@ -1,14 +1,12 @@
 import ScreenSecondView from '../view/screen-second-view';
-import {SECOND_GAME, RESP_UNKNOWN} from '../../../../../common/constants/index';
+import {RESP_UNKNOWN} from '../../../../../common/constants/index';
 
 export default class ScreenSecondPresenter {
   constructor(model) {
     this._model = model;
-
-    this._view = new ScreenSecondView({type: SECOND_GAME, data: this.data});
+    this._view = new ScreenSecondView(this.data);
     this._view.onInputClick = this.onInputClick.bind(this);
     this._root = this._view.element;
-
   }
 
   get element() {

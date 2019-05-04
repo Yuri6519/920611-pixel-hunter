@@ -1,14 +1,12 @@
 import ScreenFirstView from '../view/screen-first-view';
-import {FIRST_GAME, RESP_UNKNOWN} from '../../../../../common/constants/index';
+import {RESP_UNKNOWN} from '../../../../../common/constants/index';
 
 export default class ScreenFirstPresenter {
   constructor(model) {
     this._model = model;
-
-    this._view = new ScreenFirstView({type: FIRST_GAME, data: this.data});
+    this._view = new ScreenFirstView(this.data);
     this._view.onInputClick = this.onInputClick.bind(this);
     this._root = this._view.element;
-
   }
 
   get element() {

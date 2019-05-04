@@ -1,10 +1,28 @@
 import {RESP_OK, RESP_FAIL, RESP_UNKNOWN} from '../../../../../common/constants/index';
 
-const RIGHT_TYPE = `paint`;
+const PAINT_TYPE = `paint`;
+const PAINT_STR = `рисунок`;
+
+const PHOTO_TYPE = `photo`;
+const PHOTO_STR = `фото`;
 
 export default class ScreenThirdModel {
   constructor(data) {
     this._state = {data, res: {}};
+    const {question} = data;
+    if (question.indexOf(PAINT_STR) > 0) {
+      this._rightType = PAINT_TYPE;
+    } else if (question.indexOf(PHOTO_STR) > 0) {
+      this._rightType = PHOTO_TYPE;
+    }
+
+    if (!this._rightType) {
+      throw new Error(`Неверный тип вопроса для игры с тремя экранами: ${question}`);
+    }
+  }
+
+  get type() {
+    return this._rightType;
   }
 
   get data() {
@@ -22,7 +40,7 @@ export default class ScreenThirdModel {
     }
 
     const {type} = arrElm[0];
-    retVal = type === RIGHT_TYPE ? RESP_OK : RESP_FAIL;
+    retVal = type === this._rightType ? RESP_OK : RESP_FAIL;
 
     return retVal;
   }
