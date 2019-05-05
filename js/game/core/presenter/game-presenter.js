@@ -67,9 +67,6 @@ export default class GamePresenter extends AbstractPresenter {
   }
 
   _tick() {
-
-    console.log(`HEREREE::`);
-
     this.model.tick();
     this._header.update({time: (MAX_TIME_FOR_ONE_LEVEL - this.model.time)});
 
@@ -150,49 +147,37 @@ export default class GamePresenter extends AbstractPresenter {
   processFirstGame() {
     this.showLevel(ScreenFirstModel, ScreenFirstPresenter);
     this._tick();
-
-    // remove!!!
-    this.invokeNextLevel();
-
   }
 
   processSecondGame() {
     this.showLevel(ScreenSecondModel, ScreenSecondPresenter);
     this._tick();
-
-    // remove!!!
-    this.invokeNextLevel();
-
   }
 
   processThirdGame() {
     this.showLevel(ScreenThirdModel, ScreenThirdPresenter);
     this._tick();
-
-    // remove!!!
-    this.invokeNextLevel();
-
   }
 
   invokeNextLevel() {
-    // Appl.showStatistics(this.resp, this.model.userName);
+    Appl.showStatistics(this.resp, this.model.userName);
 
     // mock - data
-    this.stopTimer();
-    const footerDataHistoryOK = [
-      {res: 1, time: 1},
-      {res: 1, time: 2},
-      {res: 1, time: 9},
-      {res: 1, time: 8},
-      {res: 1, time: 15},
-      {res: 1, time: 15},
-      {res: 0, time: 15},
-      {res: 1, time: 25},
-      {res: 1, time: 30},
-      {res: 0, time: 25},
-    ];
+    // this.stopTimer();
+    // const footerDataHistoryOK = [
+    //   {res: 0, time: 1},
+    //   {res: 0, time: 18},
+    //   {res: 1, time: 28},
+    //   {res: 1, time: 8},
+    //   {res: 1, time: 15},
+    //   {res: 1, time: 15},
+    //   {res: 1, time: 15},
+    //   {res: 1, time: 25},
+    //   {res: 1, time: 30},
+    //   {res: 1, time: 25},
+    // ];
 
-    Appl.showStatistics(footerDataHistoryOK, `testUser`);
+    // Appl.showStatistics(footerDataHistoryOK, `testUser`);
 
 
   }

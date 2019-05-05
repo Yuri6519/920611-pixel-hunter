@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {FIRST_GAME, SECOND_GAME, THIRD_GAME} from '../common/constants/index';
+import {FIRST_GAME, SECOND_GAME, THIRD_GAME} from '../../common/constants/index';
 import adaptData from './adapter';
 
 const serverData = [

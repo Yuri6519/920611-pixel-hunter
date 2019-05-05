@@ -1,4 +1,4 @@
-import adaptData from './adapter';
+import {adaptData, adaptStat} from './adapters/index';
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
 const QUESTIONS = `questions`;
@@ -26,10 +26,11 @@ export default class Loader {
   static loadStat(name = DEF_NAME) {
     return fetch(`${SERVER_URL}/${STATS}/${APP_ID}-${name}`)
     .then(checkResult)
-    .then((response) => response.json());
+    .then((response) => response.json())
+    .then((data) => adaptStat(data));
   }
 
-  static SaveStat(data = {}, name = DEF_NAME) {
+  static saveStat(data = {}, name = DEF_NAME) {
     const reqSet = {
       method: `POST`,
       body: JSON.stringify(data),

@@ -32,12 +32,6 @@ class Application {
   }
 
   static showStatistics(currentSatistics, userName) {
-    // непонятно куда сохранять статистику игры и возможно надо в Game сохранить на сервер
-    // а в статистике взять все с сервера
-    // пока передаю текущую статистику currentSatistics и мержу еее с мок - статистикой
-
-console.log('Appl::showStatistics')
-
     const stat = new StatPresenter(new StatModel(currentSatistics, userName));
     stat.init();
     changeScreen(stat.element);

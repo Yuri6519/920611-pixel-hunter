@@ -41,6 +41,10 @@ export default class StatPresenter {
     return this._root;
   }
 
+  get userName() {
+    return this.model.userName;
+  }
+
   onButtonBackClick() {
     Appl.showWelcome();
   }
@@ -60,21 +64,20 @@ export default class StatPresenter {
   }
 
   init() {
-    this.model.init();
     this.startLoader();
 
+    // имитация долгой загрузки с сервера
     setTimeout(() => {
-      this.stopLoader();
-      this.fillStatistics();
-    }, 5000);
-
-    //this.fillStatistics();
+      this.model.init()
+      .then(() => this.fillStatistics())
+      .catch((error) => Appl.showError(error))
+      .then(() => this.stopLoader());
+    }, 1000);
   }
 
   fillStatistics() {
     const data = this.model.data;
     let index = 0;
-
     if (typeof data !== `object`) {
       throw new Error(`STAT::data не является объектом: ${data}`);
     } else {
@@ -95,7 +98,8 @@ export default class StatPresenter {
             // текущая статистика
             if (key === CURRENT_STAT) {
               // создаем элемент
-              const title = resStatus === 0 ? TITLE_VICTORY : TITLE_FAIL;
+              let title = resStatus === 0 ? TITLE_VICTORY : TITLE_FAIL;
+              title = `Игрок ${this.userName}: ${title}`
               const section = new SectionView(title);
               this._section = section.element.querySelector(`.result`);
               this._root.appendChild(this._section);

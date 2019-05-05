@@ -2,12 +2,13 @@ import StatStorage from '../storage/stat-storage';
 
 export default class StatModel {
   constructor(stat, userName) {
-    this._storage = new StatStorage(stat);
+    this._storage = new StatStorage(stat, userName);
     this._data = {};
     this._userName = userName;
+  }
 
-console.log('StatModel::this._userName::', this._userName)
-
+  get userName() {
+    return this._userName;
   }
 
   get data() {
@@ -15,10 +16,12 @@ console.log('StatModel::this._userName::', this._userName)
   }
 
   loadFromStorage() {
-    return this._storage.getData();
+    return this._storage.getData().then((data) => data);
   }
 
   init() {
-    this._data = this.loadFromStorage();
+    return this.loadFromStorage().then((data) => {
+      this._data = data;
+    });
   }
 }

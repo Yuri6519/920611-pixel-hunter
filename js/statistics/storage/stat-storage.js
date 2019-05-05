@@ -1,20 +1,24 @@
-import {initStat} from './init-stat';
+import Loader from '../../data/loader';
+
+const loadStat = Loader.loadStat;
+const saveStat = Loader.saveStat;
 
 export default class StatStorage {
-  constructor(stat) {
+  constructor(stat, userName) {
     this._data = null;
-    this._stat = stat;
+    this._stat = {stat};
+    this._userName = userName;
   }
 
   _loadStatistiscs() {
-    // моковые данные
-    this._data = initStat(this._stat);
+    return saveStat(this._stat, this._userName)
+           .then(() => loadStat(this._userName))
+           .then((data) => {
+             this._data = data;
+           });
   }
 
   getData() {
-    this._loadStatistiscs();
-    return Object.freeze(this._data);
+    return this._loadStatistiscs().then(() => Object.freeze(this._data));
   }
-
-
 }
