@@ -160,7 +160,26 @@ export default class GamePresenter extends AbstractPresenter {
   }
 
   invokeNextLevel() {
-    Appl.showStatistics(this.resp);
+    Appl.showStatistics(this.resp, this.model.userName);
+
+    // mock - data
+    // this.stopTimer();
+    // const footerDataHistoryOK = [
+    //   {res: 0, time: 1},
+    //   {res: 0, time: 18},
+    //   {res: 1, time: 28},
+    //   {res: 1, time: 8},
+    //   {res: 1, time: 15},
+    //   {res: 1, time: 15},
+    //   {res: 1, time: 15},
+    //   {res: 1, time: 25},
+    //   {res: 1, time: 30},
+    //   {res: 1, time: 25},
+    // ];
+
+    // Appl.showStatistics(footerDataHistoryOK, `testUser`);
+
+
   }
 
 

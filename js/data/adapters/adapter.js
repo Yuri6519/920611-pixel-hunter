@@ -1,4 +1,4 @@
-import {FIRST_GAME, SECOND_GAME, THIRD_GAME} from '../common/constants/index';
+import {FIRST_GAME, SECOND_GAME, THIRD_GAME} from '../../common/constants/index';
 
 const QuestionType = {
   TWO_OF_TWO: `two-of-two`,

@@ -27,7 +27,13 @@ export default class StatPresenter {
       throw new Error(`StatPresenter::constructor:: class header not found`);
     }
 
-    this._root.appendChild(headerElement);
+    this._loader = document.createElement(`div`);
+    this._loader.hidden = true;
+    this._loader.style.position = `absolute`;
+    this._loader.innerText = `Загрузка статистики`;
+    this._root.appendChild(this._loader);
+
+    this._headerElement = headerElement;
 
   }
 
@@ -35,22 +41,50 @@ export default class StatPresenter {
     return this._root;
   }
 
+  get userName() {
+    return this.model.userName;
+  }
+
   onButtonBackClick() {
     Appl.showWelcome();
   }
 
+  startLoader() {
+    this._loader.hidden = false;
+    this._loadInterval = setInterval(() => {
+      const {innerText} = this._loader;
+      const pnt = `.`;
+      this._loader.innerText = `${innerText}${pnt}`;
+    }, 500);
+  }
+
+  stopLoader() {
+    clearInterval(this._loadInterval);
+    this._loader.hidden = true;
+  }
+
   init() {
-    this.model.init();
-    this.fillStatistics();
+    this.startLoader();
+
+    // имитация долгой загрузки с сервера
+    setTimeout(() => {
+      this.model.init()
+      .then(() => this.fillStatistics())
+      .catch((error) => Appl.showError(error))
+      .then(() => this.stopLoader());
+    }, 1000);
   }
 
   fillStatistics() {
     const data = this.model.data;
     let index = 0;
-
     if (typeof data !== `object`) {
       throw new Error(`STAT::data не является объектом: ${data}`);
     } else {
+
+      this._root.innerHTML = ``;
+      this._root.appendChild(this._headerElement);
+
       for (const key in data) {
         if (typeof key === `string`) {
           const stat = data[key];
@@ -64,7 +98,8 @@ export default class StatPresenter {
             // текущая статистика
             if (key === CURRENT_STAT) {
               // создаем элемент
-              const title = resStatus === 0 ? TITLE_VICTORY : TITLE_FAIL;
+              let title = resStatus === 0 ? TITLE_VICTORY : TITLE_FAIL;
+              title = `Игрок ${this.userName}: ${title}`
               const section = new SectionView(title);
               this._section = section.element.querySelector(`.result`);
               this._root.appendChild(this._section);

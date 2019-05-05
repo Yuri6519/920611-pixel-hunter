@@ -77,7 +77,7 @@ export default class IntroPresenter {
       .then(() => this.afterLoadData())
       .catch((err) => Appl.showError(err))
       .then(() => this.stopLoading());
-    }, 2000);
+    }, 0);
   }
 
   get element() {

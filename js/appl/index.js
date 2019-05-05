@@ -25,17 +25,14 @@ class Application {
     changeScreen(welcome.element);
   }
 
-  static showGame(playerName) {
-    const game = new GamePresenter(new GameModel(playerName));
+  static showGame(userName) {
+    const game = new GamePresenter(new GameModel(userName));
     game.start();
     changeScreen(game.element);
   }
 
-  static showStatistics(currentSatistics) {
-    // непонятно куда сохранять статистику игры и возможно надо в Game сохранить на сервер
-    // а в статистике взять все с сервера
-    // пока передаю текущую статистику currentSatistics и мержу еее с мок - статистикой
-    const stat = new StatPresenter(new StatModel(currentSatistics));
+  static showStatistics(currentSatistics, userName) {
+    const stat = new StatPresenter(new StatModel(currentSatistics, userName));
     stat.init();
     changeScreen(stat.element);
   }
