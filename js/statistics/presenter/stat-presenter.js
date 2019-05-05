@@ -27,7 +27,13 @@ export default class StatPresenter {
       throw new Error(`StatPresenter::constructor:: class header not found`);
     }
 
-    this._root.appendChild(headerElement);
+    this._loader = document.createElement(`div`);
+    this._loader.hidden = true;
+    this._loader.style.position = `absolute`;
+    this._loader.innerText = `Загрузка статистики`;
+    this._root.appendChild(this._loader);
+
+    this._headerElement = headerElement;
 
   }
 
@@ -39,9 +45,30 @@ export default class StatPresenter {
     Appl.showWelcome();
   }
 
+  startLoader() {
+    this._loader.hidden = false;
+    this._loadInterval = setInterval(() => {
+      const {innerText} = this._loader;
+      const pnt = `.`;
+      this._loader.innerText = `${innerText}${pnt}`;
+    }, 500);
+  }
+
+  stopLoader() {
+    clearInterval(this._loadInterval);
+    this._loader.hidden = true;
+  }
+
   init() {
     this.model.init();
-    this.fillStatistics();
+    this.startLoader();
+
+    setTimeout(() => {
+      this.stopLoader();
+      this.fillStatistics();
+    }, 5000);
+
+    //this.fillStatistics();
   }
 
   fillStatistics() {
@@ -51,6 +78,10 @@ export default class StatPresenter {
     if (typeof data !== `object`) {
       throw new Error(`STAT::data не является объектом: ${data}`);
     } else {
+
+      this._root.innerHTML = ``;
+      this._root.appendChild(this._headerElement);
+
       for (const key in data) {
         if (typeof key === `string`) {
           const stat = data[key];
