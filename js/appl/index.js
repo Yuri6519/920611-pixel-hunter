@@ -16,7 +16,8 @@ class Application {
   static showIntro() {
     const intro = new IntroPresenter();
     changeScreen(intro.element);
-    intro.loadData();
+    // intro.loadData();
+    intro.loadDataWithDelay();
   }
 
   static showWelcome() {

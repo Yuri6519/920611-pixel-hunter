@@ -59,10 +59,11 @@ export default class IntroPresenter {
     return res;
   }
 
+  // через Promise
   loadData() {
     this.stopLoading = this.startLoading();
 
-    // иммитация долгой загрузки
+    // имитация долгой загрузки
     setTimeout(() => {
       Loader.loadData()
       .then((data) => {
@@ -77,7 +78,31 @@ export default class IntroPresenter {
       .then(() => this.afterLoadData())
       .catch((err) => Appl.showError(err))
       .then(() => this.stopLoading());
-    }, 0);
+    }, 1000);
+  }
+
+  // через async await
+  async loadDataAsync() {
+    // при вызове из app этой ф-ии - разкомментировать
+    // this.stopLoading = this.startLoading();
+    try {
+      gameData.data = await Loader.loadData();
+      const images = gameData.data.map((itr) => itr.images);
+      gameData.images = await Promise.all(this.loadImages(images));
+      this.afterLoadData();
+    } catch (err) {
+      Appl.showError(err);
+    } finally {
+      this.stopLoading();
+    }
+  }
+
+  loadDataWithDelay() {
+    this.stopLoading = this.startLoading();
+    setTimeout(() => {
+      this.loadDataAsync();
+    }, 2000);
+
   }
 
   get element() {
