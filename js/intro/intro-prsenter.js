@@ -78,7 +78,7 @@ export default class IntroPresenter {
       .then(() => this.afterLoadData())
       .catch((err) => Appl.showError(err))
       .then(() => this.stopLoading());
-    }, 1000);
+    }, 0);
   }
 
   // через async await

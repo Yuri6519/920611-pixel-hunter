@@ -4,6 +4,8 @@ import {WelcomeModel, WelcomePresenter} from '../welcome/index';
 import {GameModel, GamePresenter} from '../game/index';
 import {StatModel, StatPresenter} from '../statistics/index';
 import {ErrorPresenter} from '../common/components/error/index';
+import {ConfirmPresenter} from '../common/components/confirm/index';
+
 
 const mainElement = document.querySelector(`#main`);
 const changeScreen = (element) => {
@@ -45,6 +47,18 @@ class Application {
     const code = errArr[1];
     const error = new ErrorPresenter({status, code});
     changeScreen(error.element);
+  }
+
+  static showDialog(onConfirm, onClose) {
+    const confirmPrzn = new ConfirmPresenter();
+    confirmPrzn.confirm = onConfirm;
+    confirmPrzn.close = onClose;
+    confirmPrzn.init();
+    changeScreen(confirmPrzn.element);
+  }
+
+  static showCurrentElement(element) {
+    changeScreen(element);
   }
 
 }
