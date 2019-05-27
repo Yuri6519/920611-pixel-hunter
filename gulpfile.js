@@ -11,12 +11,17 @@ const rename = require(`gulp-rename`);
 const imagemin = require(`gulp-imagemin`);
 const svgstore = require(`gulp-svgstore`);
 const rollup = require(`gulp-better-rollup`);
-const sourcemaps = require(`gulp-sourcemaps`);
 const mocha = require(`gulp-mocha`);
 const commonjs = require(`rollup-plugin-commonjs`);
-const babel = require(`rollup-plugin-babel`);
-const resolve = require(`rollup-plugin-node-resolve`);
-const uglify = require(`gulp-uglify`);
+
+// const sourcemaps = require(`gulp-sourcemaps`);
+// const babel = require(`rollup-plugin-babel`);
+// const resolve = require(`rollup-plugin-node-resolve`);
+// const uglify = require(`gulp-uglify`);
+
+const browserify = require(`browserify`);
+const source = require(`vinyl-source-stream`);
+const tsify = require(`tsify`);
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
@@ -50,28 +55,42 @@ gulp.task(`sprite`, () => {
   .pipe(gulp.dest(`build/img`));
 });
 
-gulp.task(`scripts`, () => {
-  return gulp.src(`js/main.js`)
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(rollup({
-      cache: false, // кесли зависает сборка или hot loader...
-      plugins: [
-        // resolve node_modules
-        resolve({browser: true}),
-        // resolve commonjs imports
-        commonjs(),
-        // use babel to transpile into ES5
-        babel({
-          babelrc: false,
-          exclude: `node_modules/**`,
-          presets: [`@babel/env`]
-        })
-      ]
-    }, `iife`))
-    .pipe(uglify())
-    .pipe(sourcemaps.write(``))
-    .pipe(gulp.dest(`build/js`));
+// gulp.task(`scripts`, () => {
+//   return gulp.src(`js/main.js`)
+//     .pipe(plumber())
+//     .pipe(sourcemaps.init())
+//     .pipe(rollup({
+//       cache: false, // кесли зависает сборка или hot loader...
+//       plugins: [
+//         // resolve node_modules
+//         resolve({browser: true}),
+//         // resolve commonjs imports
+//         commonjs(),
+//         // use babel to transpile into ES5
+//         babel({
+//           babelrc: false,
+//           exclude: `node_modules/**`,
+//           presets: [`@babel/env`]
+//         })
+//       ]
+//     }, `iife`))
+//     .pipe(uglify())
+//     .pipe(sourcemaps.write(``))
+//     .pipe(gulp.dest(`build/js`));
+// });
+
+gulp.task(`scripts`, function () {
+  return browserify({
+    basedir: `.`,
+    debug: true,
+    entries: [`js/main.ts`],
+    cache: {},
+    packageCache: {}
+  })
+  .plugin(tsify)
+  .bundle()
+  .pipe(source(`main.js`))
+  .pipe(gulp.dest(`build/js`));
 });
 
 gulp.task(`imagemin`, [`copy`], () => {
