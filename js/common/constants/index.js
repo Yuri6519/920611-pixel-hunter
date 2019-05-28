@@ -50,3 +50,7 @@ export const MAX_TIME_FOR_ONE_LEVEL = 30;
 // settings
 export const REG_WORK = `work`;
 export const REG_TEST = `test`;
+
+// timer
+export const ATTENTION_TIME = 5;
+
